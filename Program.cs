@@ -41,13 +41,14 @@ namespace CadenasE2
             int seleccion = -1;
             Console.WriteLine("Seleccione operación a realizar:\n" +
                             "1. Sustituir una palabra por otra.\n" +
-                            "2.Buscar cadena de texto.\n" +
+                            "2. Buscar cadena de texto.\n" +
                             "3. Comprobar si texto empieza por cadena.\n" +
+                            "4. Inserta Dígito y rellenar con ceros hasta 12\n"+
                             "0. Salir");
             try
             {
                 seleccion = Convert.ToInt32(Console.ReadLine());
-                if (seleccion < 0 | seleccion > 3)  return SeleccionarOperacion();
+                if (seleccion < 0 | seleccion > 4)  return SeleccionarOperacion();
             }
             catch (Exception)
             {
@@ -130,6 +131,33 @@ namespace CadenasE2
                 Console.WriteLine("No se encuentra cadena en texto");
             }
         }
+        
+        /// <summary>
+        /// Rellenar con 0 por delante del dígito que le ingreses hasta 12
+        /// </summary>
+        public static void RellenarConCeros()
+        {
+            int numero;
+            Console.WriteLine("Introduce un número y se rellenará con 0 por delante hasta llegar a 12 caracteres");
+            string digito = Console.ReadLine();
+            if (!Int32.TryParse(digito, out  numero))
+            {
+                Console.WriteLine("Solo se puede insertar valores numéricos");
+                RellenarConCeros();
+            }
+
+            if (digito.Length < 12 & Int32.TryParse(digito, out  numero))
+	        {
+                int cerosNecesarios = 12 - digito.Length;
+                string ceros = "";
+                for (int i = cerosNecesarios; i > 0; i--)
+			    {
+                    ceros = ceros + "0";
+			    }
+                
+                Console.WriteLine(digito.Insert(0,ceros));
+	        }
+        }
 
         /// <summary>
         /// Realiza las operaciones con la selección de operación y texto
@@ -151,6 +179,9 @@ namespace CadenasE2
                     break;
                 case 0:
                     Console.WriteLine("Operaciones finalizadas");
+                    break;
+                case 4:
+                    RellenarConCeros();
                     break;
                 default:
                     Console.WriteLine("Selección no válida");
